@@ -18,7 +18,7 @@ public class GuiSettings extends Settings {
 	}
 
 	public static final Setting WELCOME_REDIRECT_TIMEOUT = new Setting(
-			"welcolme.redirect.timeout", "Welcome redirect timeout ",
+			"welcome.redirect.timeout", "Welcome redirect timeout ",
 			"The time the welcome screen will be shown", "millis", 10000,
 			"Application", true, new GreaterThan(0));
 	
