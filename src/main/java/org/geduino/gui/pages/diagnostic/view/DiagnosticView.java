@@ -7,13 +7,20 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import org.geduino.gui.pages.diagnostic.adapter.DiagnosticStatusItemAdapter;
+import org.geduino.gui.service.OSService;
+import org.geduino.gui.service.ShutdownException;
 import org.geduino.gui.settings.SettingsSingleton;
 import org.geduino.ros.common.msgs.hydro.diagnostic_msgs.DiagnosticStatus;
 
 import com.genius.framework.common.locale.LocalizedMessage;
+import com.genius.framework.common.logger.Logger;
 import com.genius.framework.core.mvc.callback.Callback;
 import com.genius.framework.core.mvc.callback.CallbackHandler;
+import com.genius.framework.core.mvc.callback.impl.ConfirmCallback;
 import com.genius.framework.core.mvc.view.TargetViewScope;
+import com.genius.framework.core.util.UserInteractionLock;
+import com.genius.framework.core.view.button.ButtonView;
+import com.genius.framework.core.view.dialog.impl.ConfirmDialogView;
 import com.genius.framework.core.view.label.LabelView;
 import com.genius.framework.core.view.list.header.SimpleListHeaderView;
 import com.genius.framework.core.view.list.impl.SimpleListView;
@@ -24,6 +31,8 @@ import com.genius.framework.core.view.list.provider.ActionDataProvider;
 import com.genius.framework.core.view.window.WindowView;
 
 public class DiagnosticView extends WindowView {
+
+	private static final Logger LOGGER = Logger.getLogger(DiagnosticView.class);
 
 	private LabelView connectionLabelView;
 	private LabelView lastUpdateLabelView;
@@ -80,6 +89,11 @@ public class DiagnosticView extends WindowView {
 				diagnosticModel);
 		addComponent(paginatorView);
 
+		// Create shutdown button
+		ButtonView shutdownButtonView = new ButtonView("shutdown",
+				TargetViewScope.PARENT);
+		addComponent(shutdownButtonView);
+
 	}
 
 	@Override
@@ -124,6 +138,15 @@ public class DiagnosticView extends WindowView {
 				.addCallbackHandler(new StartUpdateTimerCallbackHandler());
 		hotAddComponent(diagnosticStatusDialog);
 
+	}
+
+	public void onClickShutdown() {
+		
+		// Create confirm dialog view
+		ConfirmDialogView confirmDialogView = new ConfirmDialogView("confirmShutdown");
+		confirmDialogView.addCallbackHandler(new ShutdownCallbackHandler());
+		hotAddComponent(confirmDialogView);
+		
 	}
 
 	private synchronized void startUpdateTimer() {
@@ -187,6 +210,39 @@ public class DiagnosticView extends WindowView {
 			lastUpdateLabelView.setText(new LocalizedMessage(
 					"diagnostic.last.update").getMessage(lastUpdateString));
 			lastUpdateLabelView.refresh();
+
+		}
+
+	}
+
+	private class ShutdownCallbackHandler implements CallbackHandler {
+
+		@Override
+		public void hanlde(Callback[] callbacks) {
+
+			// Get confirm callback
+			ConfirmCallback confirmCallback = (ConfirmCallback) callbacks[0];
+
+			if (confirmCallback.isConfirm()) {
+
+				try {
+
+					// Shutdown
+					OSService.getInstance().shutdown();
+
+				} catch (ShutdownException ex) {
+
+					// Log
+					LOGGER.error(ex);
+
+				}
+
+			} else {
+				
+				// Set user interaction ready
+				UserInteractionLock.getInstance().ready();
+				
+			}
 
 		}
 
