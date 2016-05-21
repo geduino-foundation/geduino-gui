@@ -3,7 +3,7 @@ package org.geduino.gui.pages.diagnostic.controller;
 import java.util.List;
 
 import org.geduino.gui.ros.DiagnosticSingleton;
-import org.geduino.ros.common.msgs.hydro.diagnostic_msgs.DiagnosticStatus;
+import org.geduino.ros.common.msgs.jade.diagnostic_msgs.DiagnosticStatus;
 
 import com.genius.framework.core.mvc.controller.Controller;
 

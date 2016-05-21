@@ -29,11 +29,11 @@ public class GuiApplicationControl implements ApplicationControl {
 	}
 
 	@Override
-	public void launchApplicationConfigurationTool() {
+	public void launchApplicationConfigurationTool(String[] args) {
 
 		// Launch configuration tool
 		DesktopApplicationContext.main(GuiSettingsApplication.class,
-				new String[] {});
+				args);
 
 	}
 

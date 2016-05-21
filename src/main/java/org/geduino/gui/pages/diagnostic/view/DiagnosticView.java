@@ -10,7 +10,7 @@ import org.geduino.gui.pages.diagnostic.adapter.DiagnosticStatusItemAdapter;
 import org.geduino.gui.service.OSService;
 import org.geduino.gui.service.ShutdownException;
 import org.geduino.gui.settings.SettingsSingleton;
-import org.geduino.ros.common.msgs.hydro.diagnostic_msgs.DiagnosticStatus;
+import org.geduino.ros.common.msgs.jade.diagnostic_msgs.DiagnosticStatus;
 
 import com.genius.framework.common.locale.LocalizedMessage;
 import com.genius.framework.common.logger.Logger;

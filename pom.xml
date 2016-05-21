@@ -137,7 +137,7 @@
 		<!-- The ROS Hydro Common Messages -->
 		<dependency>
 			<groupId>org.geduino.ros</groupId>
-			<artifactId>common-msgs-hydro</artifactId>
+			<artifactId>common-msgs-jade</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 

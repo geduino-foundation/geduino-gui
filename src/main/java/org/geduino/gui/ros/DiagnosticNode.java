@@ -3,8 +3,8 @@ package org.geduino.gui.ros;
 import java.net.URI;
 
 import org.geduino.gui.settings.SettingsSingleton;
-import org.geduino.ros.common.msgs.hydro.diagnostic_msgs.DiagnosticArray;
-import org.geduino.ros.common.msgs.hydro.diagnostic_msgs.DiagnosticStatus;
+import org.geduino.ros.common.msgs.jade.diagnostic_msgs.DiagnosticArray;
+import org.geduino.ros.common.msgs.jade.diagnostic_msgs.DiagnosticStatus;
 import org.geduino.ros.core.exception.RosException;
 import org.geduino.ros.core.naming.model.GlobalName;
 import org.geduino.ros.node.Node;

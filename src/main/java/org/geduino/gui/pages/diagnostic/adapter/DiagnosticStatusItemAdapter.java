@@ -3,7 +3,7 @@ package org.geduino.gui.pages.diagnostic.adapter;
 import java.util.Date;
 
 import org.geduino.gui.ros.DiagnosticSingleton;
-import org.geduino.ros.common.msgs.hydro.diagnostic_msgs.DiagnosticStatus;
+import org.geduino.ros.common.msgs.jade.diagnostic_msgs.DiagnosticStatus;
 
 import com.genius.framework.common.locale.LocalizedMessage;
 import com.genius.framework.core.view.list.item.impl.TypeBItemAdapter;

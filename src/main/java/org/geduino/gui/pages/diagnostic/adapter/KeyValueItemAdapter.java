@@ -1,6 +1,6 @@
 package org.geduino.gui.pages.diagnostic.adapter;
 
-import org.geduino.ros.common.msgs.hydro.diagnostic_msgs.KeyValue;
+import org.geduino.ros.common.msgs.jade.diagnostic_msgs.KeyValue;
 
 import com.genius.framework.core.view.list.item.impl.TypeAItemAdapter;
 
