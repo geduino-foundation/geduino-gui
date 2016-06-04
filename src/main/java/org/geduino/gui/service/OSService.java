@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.genius.framework.common.bean.Bean;
 import com.genius.framework.common.bean.BeanContext;
+import com.genius.framework.common.cli.Cli;
 import com.genius.framework.common.logger.Logger;
 
 public class OSService extends Bean {
@@ -26,29 +27,23 @@ public class OSService extends Bean {
 
 	public void shutdown() throws ShutdownException {
 
-		// Get runtime
-		Runtime runtime = Runtime.getRuntime();
-
 		// Log
 		LOGGER.info("executing shutdown...");
 
 		try {
 
-			// Execute start script
-			Process process = runtime.exec(new String[] { "sudo", "shutdown",
-					"-P", "now" });
-
-			// Wait...
-			process.waitFor();
+			// Execute shutdown script
+			int exitValue = new Cli().command("sudo").command("shutdown")
+					.command("-P").command("now").executeAndWait();
 
 			// Log
-			LOGGER.info("process exit value is: " + process.exitValue());
+			LOGGER.info("process exit value is: " + exitValue);
 
-			if (process.exitValue() != 0) {
+			if (exitValue != 0) {
 
 				throw new ShutdownException(
 						"an error occurred waiting for shutdown process..."
-								+ process.exitValue());
+								+ exitValue);
 
 			}
 
