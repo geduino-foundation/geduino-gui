@@ -1,6 +1,10 @@
 package org.geduino.gui.pages.diagnostic.view;
 
+import java.util.Arrays;
+
 import org.geduino.gui.pages.diagnostic.adapter.KeyValueItemAdapter;
+import org.geduino.gui.ros.DiagnosticListener;
+import org.geduino.gui.ros.DiagnosticSingleton;
 import org.geduino.ros.common.msgs.hydro.diagnostic_msgs.DiagnosticStatus;
 
 import com.genius.framework.core.mvc.callback.Callback;
@@ -12,15 +16,19 @@ import com.genius.framework.core.view.list.model.ListModel;
 import com.genius.framework.core.view.list.paginator.PaginatorView;
 import com.genius.framework.core.view.list.provider.SimpleDataProvider;
 
-public class DiagnosticStatusDialog extends HeaderDialogView {
+public class DiagnosticStatusDialog extends HeaderDialogView implements
+		DiagnosticListener {
 
-	private DiagnosticStatus diagnosticStatus;
+	private String name;
 
-	public DiagnosticStatusDialog(DiagnosticStatus diagnosticStatus) {
+	private SimpleDataProvider keyValueDataProvider;
+	private ListModel keyValueModel;
+
+	public DiagnosticStatusDialog(String name) {
 
 		super("diagnosticStatusDialog");
 
-		this.diagnosticStatus = diagnosticStatus;
+		this.name = name;
 
 	}
 
@@ -34,12 +42,15 @@ public class DiagnosticStatusDialog extends HeaderDialogView {
 
 		super.onCreate();
 
+		// Get diagnostic status
+		DiagnosticStatus diagnosticStatus = DiagnosticSingleton.getInstance()
+				.getDiagnosticStatus(name);
+
 		// Create data provider
-		SimpleDataProvider keyValueDataProvider = new SimpleDataProvider(
-				diagnosticStatus.values);
+		keyValueDataProvider = new SimpleDataProvider(diagnosticStatus.values);
 
 		// Create key value model
-		ListModel keyValueModel = new ListModel(keyValueDataProvider);
+		keyValueModel = new ListModel(keyValueDataProvider);
 
 		// Create key value item adapter
 		KeyValueItemAdapter keyValueItemAdapter = new KeyValueItemAdapter();
@@ -63,9 +74,22 @@ public class DiagnosticStatusDialog extends HeaderDialogView {
 		super.onShow();
 
 		// Set diagnostic status name on title
-		getTitleLabelView().setText(diagnosticStatus.name);
+		getTitleLabelView().setText(name);
+
+		// Add as diagnostic listener
+		DiagnosticSingleton.getInstance().addListener(name, this);
 
 		return true;
+
+	}
+
+	@Override
+	protected void onDestroy() {
+
+		super.onDestroy();
+
+		// Remove as diagnostic listener
+		DiagnosticSingleton.getInstance().removeListener(name);
 
 	}
 
@@ -78,6 +102,22 @@ public class DiagnosticStatusDialog extends HeaderDialogView {
 		executeCallbackHandlers(new Callback[] {});
 
 		return result;
+
+	}
+
+	@Override
+	public void diagnosticUpdated() {
+
+		// Get diagnostic status
+		DiagnosticStatus diagnosticStatus = DiagnosticSingleton.getInstance()
+				.getDiagnosticStatus(name);
+
+		// Set values
+		keyValueDataProvider.setDatas(Arrays.asList(diagnosticStatus.values));
+
+		// Update datas and notify observers
+		keyValueModel.updateDatas();
+		keyValueModel.notifyObservers();
 
 	}
 
