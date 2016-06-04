@@ -2,7 +2,7 @@ package org.geduino.gui.ros;
 
 import java.util.Comparator;
 
-import org.geduino.ros.common.msgs.jade.diagnostic_msgs.DiagnosticStatus;
+import org.geduino.ros.common.msgs.indigo.diagnostic_msgs.DiagnosticStatus;
 
 class DiagnosticStatusComparator implements Comparator<DiagnosticStatus> {
 

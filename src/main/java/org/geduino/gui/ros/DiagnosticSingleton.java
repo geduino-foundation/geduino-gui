@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.geduino.gui.settings.SettingsSingleton;
-import org.geduino.ros.common.msgs.jade.diagnostic_msgs.DiagnosticStatus;
+import org.geduino.ros.common.msgs.indigo.diagnostic_msgs.DiagnosticStatus;
 import org.geduino.ros.core.naming.model.GlobalName;
 import org.geduino.ros.node.NodeThread;
 

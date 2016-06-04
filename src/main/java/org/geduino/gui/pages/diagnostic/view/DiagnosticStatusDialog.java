@@ -1,7 +1,7 @@
 package org.geduino.gui.pages.diagnostic.view;
 
 import org.geduino.gui.pages.diagnostic.adapter.KeyValueItemAdapter;
-import org.geduino.ros.common.msgs.jade.diagnostic_msgs.DiagnosticStatus;
+import org.geduino.ros.common.msgs.indigo.diagnostic_msgs.DiagnosticStatus;
 
 import com.genius.framework.core.mvc.callback.Callback;
 import com.genius.framework.core.mvc.view.TargetViewScope;
