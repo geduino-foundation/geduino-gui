@@ -1,0 +1,40 @@
+ERROR: [org.geduino.gui.GeniusLoggerAppender | 04/06/2016 10:45:13.961] - /diagnostics_monitor - default - an error occurs running node
+org.geduino.ros.node.exception.RosNodeException: could not start node
+	at org.geduino.ros.node.NodeHandle.start(NodeHandle.java:135)
+	at org.geduino.gui.ros.DiagnosticNode.run(DiagnosticNode.java:35)
+	at org.geduino.ros.node.NodeThread.run(NodeThread.java:28)
+Caused by: org.geduino.ros.core.api.exception.RosApiProtocolException: an error occurs at xmlrcp level
+	at org.geduino.ros.xmlrpc.client.XmlRpcMasterAPIClient.getUri(XmlRpcMasterAPIClient.java:353)
+	at org.geduino.ros.node.NodeHandle.start(NodeHandle.java:112)
+	... 2 more
+Caused by: org.apache.xmlrpc.XmlRpcException: Failed to read server's response: No route to host
+	at org.apache.xmlrpc.client.XmlRpcStreamTransport.sendRequest(XmlRpcStreamTransport.java:161)
+	at org.apache.xmlrpc.client.XmlRpcHttpTransport.sendRequest(XmlRpcHttpTransport.java:143)
+	at org.apache.xmlrpc.client.XmlRpcSunHttpTransport.sendRequest(XmlRpcSunHttpTransport.java:69)
+	at org.apache.xmlrpc.client.XmlRpcClientWorker.execute(XmlRpcClientWorker.java:56)
+	at org.apache.xmlrpc.client.XmlRpcClient.execute(XmlRpcClient.java:167)
+	at org.apache.xmlrpc.client.XmlRpcClient.execute(XmlRpcClient.java:137)
+	at org.apache.xmlrpc.client.XmlRpcClient.execute(XmlRpcClient.java:126)
+	at org.geduino.ros.xmlrpc.client.XmlRpcMasterAPIClient.getUri(XmlRpcMasterAPIClient.java:336)
+	... 3 more
+Caused by: java.net.NoRouteToHostException: No route to host
+	at java.net.PlainSocketImpl.socketConnect(Native Method)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:339)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:200)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:182)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:579)
+	at java.net.Socket.connect(Socket.java:528)
+	at sun.net.NetworkClient.doConnect(NetworkClient.java:180)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:432)
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:527)
+	at sun.net.www.http.HttpClient.<init>(HttpClient.java:211)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:308)
+	at sun.net.www.http.HttpClient.New(HttpClient.java:326)
+	at sun.net.www.protocol.http.HttpURLConnection.getNewHttpClient(HttpURLConnection.java:996)
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:932)
+	at sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:850)
+	at sun.net.www.protocol.http.HttpURLConnection.getOutputStream(HttpURLConnection.java:1091)
+	at org.apache.xmlrpc.client.XmlRpcSunHttpTransport.writeRequest(XmlRpcSunHttpTransport.java:104)
+	at org.apache.xmlrpc.client.XmlRpcStreamTransport.sendRequest(XmlRpcStreamTransport.java:151)
+	... 10 more
