@@ -133,7 +133,7 @@ public class DiagnosticView extends WindowView {
 
 		// Create diagnostic status dialog
 		DiagnosticStatusDialog diagnosticStatusDialog = new DiagnosticStatusDialog(
-				diagnosticStatus);
+				diagnosticStatus.name);
 		diagnosticStatusDialog
 				.addCallbackHandler(new StartUpdateTimerCallbackHandler());
 		hotAddComponent(diagnosticStatusDialog);

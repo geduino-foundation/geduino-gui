@@ -23,6 +23,8 @@ public class DiagnosticSingleton extends Bean {
 
 	private Map<String, DiagnosticStatus> diagnosticStatusMap;
 	private Map<String, Date> lastReceivedMap;
+	
+	private Map<String, DiagnosticListener> diagnosticListeners;
 
 	public static DiagnosticSingleton getInstance() {
 		return (DiagnosticSingleton) BeanContext.getInstance(
@@ -35,6 +37,9 @@ public class DiagnosticSingleton extends Bean {
 		// Create diagnostic status map and lat received map
 		diagnosticStatusMap = new HashMap<String, DiagnosticStatus>();
 		lastReceivedMap = new HashMap<String, Date>();
+		
+		// Create diagnostic listeners
+		diagnosticListeners = new HashMap<String, DiagnosticListener>();
 
 		// Get diagnostic node name
 		GlobalName diagnosticNodeName = new GlobalName(SettingsSingleton
@@ -58,6 +63,14 @@ public class DiagnosticSingleton extends Bean {
 		diagnosticStatusMap.clear();
 
 	}
+	
+	public void addListener(String name, DiagnosticListener diagnosticListener) {
+		diagnosticListeners.put(name, diagnosticListener);
+	}
+	
+	public void removeListener(String name) {
+		diagnosticListeners.remove(name);
+	}
 
 	public synchronized void update(DiagnosticStatus[] diagnosticStatusArray) {
 
@@ -78,6 +91,9 @@ public class DiagnosticSingleton extends Bean {
 			// Put last received date
 			lastReceivedMap.put(name, now);
 
+			// Notify listener
+			notifyListener(name);
+			
 		}
 
 	}
@@ -98,6 +114,10 @@ public class DiagnosticSingleton extends Bean {
 		return diagnosticStatusList;
 
 	}
+	
+	public synchronized DiagnosticStatus getDiagnosticStatus(String name) {
+		return diagnosticStatusMap.get(name);
+	}
 
 	public synchronized Date getLastReceived(DiagnosticStatus diagnosticStatus) {
 
@@ -109,6 +129,20 @@ public class DiagnosticSingleton extends Bean {
 
 		return lastReceived;
 
+	}
+	
+	private void notifyListener(String name) {
+		
+		// Get diagnostic listener for given name
+		DiagnosticListener diagnosticListener = diagnosticListeners.get(name);
+		
+		if (diagnosticListener != null) {
+		
+			// Notify listener
+			diagnosticListener.diagnosticUpdated();
+			
+		}
+		
 	}
 
 }
